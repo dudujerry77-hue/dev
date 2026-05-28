@@ -1,13 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOVA — Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>you are good Jesus</h1>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="go('home')">KOVA</div>
+  <div class="nav-links">
+    <button class="nb on" id="nb-home" onclick="go('home')">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Shop
+    </button>
+    <button class="nb" id="nb-cart" onclick="go('cart')">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
+      Cart <span class="badge" id="cart-badge">0</span>
+    </button>
+    <button class="nb" id="nb-admin" onclick="go('admin')">
+      <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Admin
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <svg class="icon" style="width:11px;height:11px" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        New Collection 2025
+      </div>
+      <h1>SHOP<br><em>KOVA</em></h1>
+      <p class="hero-sub">Curated essentials. Cinematic quality. Fast delivery across Nigeria.</p>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="h-count">15</div>
+      <div class="hero-stat-label">Products</div>
+    </div>
+  </div>
+
+  <div class="filter-bar" id="filter-bar"></div>
+
+  <div class="products-wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<!-- ═══ CART ═══ -->
+<div class="page" id="page-cart">
+  <div class="cart-page">
+    <div class="page-title">Cart <small id="cart-title-count"></small></div>
+    <div id="cart-body"></div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN ═══ -->
+<div class="page" id="page-admin">
+  <div class="lock-wrap" id="lock-wrap">
+    <div class="lock-ring">
+      <svg class="icon-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </div>
+    <h2>ADMIN ACCESS</h2>
+    <p>Enter your 4-digit PIN to continue</p>
+    <div class="pins">
+      <input class="pd" type="password" maxlength="1" inputmode="numeric" id="p1" autocomplete="off">
+      <input class="pd" type="password" maxlength="1" inputmode="numeric" id="p2" autocomplete="off">
+      <input class="pd" type="password" maxlength="1" inputmode="numeric" id="p3" autocomplete="off">
+      <input class="pd" type="password" maxlength="1" inputmode="numeric" id="p4" autocomplete="off">
+    </div>
+    <div class="pin-err" id="pin-err"></div>
+    <button class="unlock-btn" onclick="checkPin()">
+      Unlock
+      <svg class="icon" style="width:14px;height:14px" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+    <p class="pin-hint">Demo PIN: 1234</p>
+  </div>
+
+  <div class="apanel" id="apanel" style="display:none">
+    <div class="ap-head">
+      <h2>ADMIN PANEL</h2>
+      <button class="lo-btn" onclick="logout()">
+        <svg class="icon" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="ptable">
+      <div class="th"><span>Product</span><span>Category</span><span>Price</span><span>Stock</span></div>
+      <div id="admin-rows"></div>
+    </div>
+    <button class="toggle-form" id="tog" onclick="toggleForm()">
+      <svg class="icon" style="width:13px;height:13px" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add New Product
+    </button>
+    <div class="add-form" id="af" style="display:none">
+      <h3>NEW PRODUCT</h3>
+      <div class="fg">
+        <div class="ff"><label>Product Name</label><input id="fn" placeholder="e.g. Classic White Tee"></div>
+        <div class="ff"><label>Category</label>
+          <select id="fc">
+            <option>Apparel</option><option>Footwear</option><option>Accessories</option>
+            <option>Electronics</option><option>Home</option>
+          </select>
+        </div>
+        <div class="ff"><label>Price (₦)</label><input id="fp" type="number" placeholder="15000"></div>
+        <div class="ff"><label>Stock Qty</label><input id="fs" type="number" placeholder="30"></div>
+        <div class="ff full"><label>Image URL</label><input id="fi" placeholder="https://images.unsplash.com/..."></div>
+      </div>
+      <div class="fa">
+        <button class="save-btn" onclick="saveProduct()">
+          <svg class="icon" style="width:13px;height:13px" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Save Product
+        </button>
+        <button class="cncl-btn" onclick="toggleForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg class="icon" style="width:13px;height:13px;stroke:currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="app.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
