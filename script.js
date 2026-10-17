@@ -77,6 +77,11 @@ function renderHome(){
     <div class="pcard">
       ${p.badge?`<div class="pbadge ${p.badge==='Low'?'sale':''}">${p.badge}</div>`:''}
       <div class="pcard-img-wrap">
+      
+      <div class="favicon" onclick="toggleFavorite(${p.id})">
+  Save ♡
+</div>
+
         <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=70'">
       </div>
       <div class="pcard-body">
@@ -95,6 +100,64 @@ function renderHome(){
     </div>
   `).join('');
 }
+
+
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites') || '[]');
+}
+
+function toggleFavorite(id) {
+  const favorites = getFavorites();
+  const index = favorites.findIndex(p => String(p.id) === String(id));
+
+  if (index !== -1) {
+    favorites.splice(index, 1);
+  } else {
+    const product = products.find(p => String(p.id) === String(id));
+    if (!product) return;
+
+    favorites.push(product);
+  }
+
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  renderFavorites();
+
+  // Refresh the product cards if your render function exists
+  if (typeof renderProducts === 'function') {
+    renderProducts();
+  }
+}
+
+
+
+function renderFavorites() {
+  const page = document.getElementById('page-favor');
+  if (!page) return;
+
+  const favorites = getFavorites();
+
+  if (favorites.length === 0) {
+    page.innerHTML = '<p>You have no favorites yet.</p>';
+    return;
+  }
+
+  page.innerHTML = favorites.map(p => `
+    <div class="fcard">
+      <div class="fcard-img-wrap">
+        <img src="${p.img}" alt="${p.name}">
+      </div>
+      <div class="fcard-body">
+        <div class="pcat">${p.cat}</div>
+        <div class="pname">${p.name}</div>
+        <div class="pprice">${fmt(p.price)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+
 
 function setFilter(c){ activeFilter=c; renderHome(); }
 
@@ -166,6 +229,19 @@ function renderCart(){
     </button>
   </div>`;
 }
+
+function updateFavoritesEmptyState() {
+  const emptyMessage = document.getElementById('favorites-empty');
+  const favoritesPage = document.getElementById('page-favor');
+
+  if (!emptyMessage || !favoritesPage) return;
+
+  // Replace this selector with your actual favorite-item selector.
+  const favoriteItems = favoritesPage.querySelectorAll('.favorite-item');
+
+  emptyMessage.classList.toggle('hidden', favoriteItems.length > 0);
+}
+
 
 function chQty(id,d){
   const it=cart.find(c=>c.id===id);

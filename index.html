@@ -22,10 +22,11 @@
       <svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
       Cart <span class="badge" id="cart-badge">0</span>
     </button>
-    <button class="nb" id="nb-admin" onclick="go('admin')">
+    <!-- <button class="nb" id="nb-admin" onclick="go('admin')">
       <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Admin
-    </button>
+    </button> -->
+    <button class="nb" onclick="go('favor')"> Favorite </button>
   </div>
 </nav>
 
@@ -61,6 +62,16 @@
   </div>
 </div>
 
+<div class="page" id="page-favor">
+   <div id="favorites-empty" class="favorites-empty">
+    
+     <button class=" btn-favo" onclick="go('home')">
+      <p>You have no favorites yet.</p>
+    <p>To see your favorites, add favorites from your shopping </p>
+     </button>
+  </div>
+</div>
+
 <!-- ═══ ADMIN ═══ -->
 <div class="page" id="page-admin">
   <div class="lock-wrap" id="lock-wrap">
@@ -80,7 +91,6 @@
       Unlock
       <svg class="icon" style="width:14px;height:14px" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
-    <p class="pin-hint">Demo PIN: 1234</p>
   </div>
 
   <div class="apanel" id="apanel" style="display:none">
