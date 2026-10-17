@@ -151,8 +151,8 @@ function renderFavorites() {
       <div class="fcard-body">
         <div class="pcat">${p.cat}</div>
         <div class="pname">${p.name}</div>
+        </div>
         <div class="pprice">${fmt(p.price)}</div>
-      </div>
     </div>
   `).join('');
 }

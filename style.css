@@ -125,6 +125,20 @@ nav{
   transition:var(--ease);text-transform:uppercase;white-space:nowrap;
   flex-shrink:0;
 }
+
+.fcard{
+  display: flex;
+  width: 100rem;
+  background: var(--card);
+  height: 3rem;
+  overflow: hidden;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.fcard-img-wrap{width:7rem;}
+.fcard img{width: 100%;}
+
 .add-btn:hover{background:#d6eb3a;transform:scale(1.04)}
 .add-btn.added{background:transparent;color:var(--accent);border:1px solid rgba(232,255,71,.3)}
 .add-btn .icon{width:13px;height:13px;stroke-width:2.2}
