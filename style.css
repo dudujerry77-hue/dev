@@ -129,7 +129,7 @@ nav{
 .fcard{
   display: flex;
   align-items: center;
-  width: 100rem;
+  min-width: 100%;
   background: var(--card);
   height: 3rem;
   overflow: hidden;
@@ -397,6 +397,12 @@ background: rgba(232,255,71,.8);
 .grid{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+.fcard{
+  min-width: 200px;
+  padding-right: 40px;
+  padding-left: 10px;
+  gap: 20px;
 }
 .nb{color: #fff !important;}
   .nb svg{display: none;}
