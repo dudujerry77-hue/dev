@@ -84,7 +84,7 @@ nav{
 
 .products-wrap{padding:0 2rem 4rem;max-width:1200px;margin:0 auto}
 .grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,2fr));
   gap:0.5rem;
   border-radius:var(--r);overflow:hidden;
 }
